@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Harbour Sons — Salt-worn folk from the low country</title>
+<meta name="description" content="Harbour Sons play sea shanties, string-band roots and windswept covers. Watch the videos, catch a show, book the band.">
+<meta name="theme-color" content="#0E1417">
+
+<!-- Open Graph / social cards. Replace the absolute URLs after you know your Pages domain. -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Harbour Sons">
+<meta property="og:title" content="Harbour Sons">
+<meta property="og:description" content="Sea shanties, string-band roots and windswept covers — played loud enough to carry across the water.">
+<meta property="og:image" content="assets/img/og-card.png">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="icon" href="assets/img/icon-32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="assets/img/icon-180.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Barlow+Condensed:wght@400;500;600&family=Lora:ital,wght@0,400;0,500;1,400&display=swap">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+
+<body>
+
+<a class="btn visually-hidden" href="#watch">Skip to content</a>
+
+<!-- ===================== Masthead ===================== -->
+<header class="masthead" id="masthead">
+  <a class="brand" href="#top">
+    <img src="assets/img/seal-white.webp" alt="" width="44" height="44">
+    <span>
+      <span class="brand-name">Harbour Sons</span>
+      <span class="brand-sub" data-bind="band.location">The Netherlands</span>
+    </span>
+  </a>
+
+  <nav class="nav" id="nav" aria-label="Primary">
+    <a href="#watch">Watch</a>
+    <a href="#about">About</a>
+    <a href="#shows">Shows</a>
+    <a href="#booking">Booking</a>
+  </nav>
+
+  <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="nav" aria-label="Menu">
+    <span></span>
+  </button>
+</header>
+
+<main id="top">
+
+  <!-- ===================== Hero ===================== -->
+  <section class="hero" id="hero">
+    <!-- Background media is injected here by main.js based on data/site.json -->
+    <div class="hero-media" id="heroMedia" aria-hidden="true"></div>
+    <div class="hero-scrim" id="heroScrim" aria-hidden="true"></div>
+    <div class="grain" aria-hidden="true"></div>
+
+    <div class="hero-inner">
+      <!-- The crest carries the wordmark, so it *is* the h1 — no need to set
+           the band name twice. The alt text keeps it a real heading. -->
+      <h1 class="hero-title">
+        <img class="hero-badge" src="assets/img/badge-white.webp"
+             alt="Harbour Sons" width="900" height="1202" fetchpriority="high">
+      </h1>
+
+      <p class="hero-tagline" data-bind="band.tagline">Salt-worn folk from the low country</p>
+      <p class="hero-blurb" data-bind="band.blurb"></p>
+
+      <div class="hero-actions">
+        <a class="btn btn--solid" href="#watch">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+          Watch the videos
+        </a>
+        <a class="btn btn--ghost" href="#booking">Book the band</a>
+      </div>
+    </div>
+
+    <button class="hero-sound" id="heroSound" aria-pressed="false" hidden>
+      <svg viewBox="0 0 24 24" aria-hidden="true" id="heroSoundIcon">
+        <path d="M4 9v6h4l5 5V4L8 9H4z"/>
+      </svg>
+      <span id="heroSoundLabel">Sound off</span>
+    </button>
+
+    <a class="scroll-cue" href="#watch" aria-label="Scroll to videos">
+      <span>Scroll</span>
+      <i aria-hidden="true"></i>
+    </a>
+  </section>
+
+  <!-- ===================== Ticker ===================== -->
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker-track" id="ticker"></div>
+    <div class="ticker-track" id="tickerClone"></div>
+  </div>
+
+  <!-- ===================== Watch ===================== -->
+  <section class="section" id="watch">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div>
+          <p class="eyebrow">From the channel</p>
+          <h2 class="section-title">Watch</h2>
+          <p class="lede">Live takes and covers, straight off our YouTube channel. New ones land here automatically.</p>
+        </div>
+      </div>
+
+      <div class="video-grid" id="videoGrid" aria-live="polite">
+        <p class="grid-note">Loading videos&hellip;</p>
+      </div>
+
+      <div class="channel-cta reveal">
+        <a class="btn" id="channelLink" href="https://www.youtube.com/@HarbourSons" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M23 12s0-3.9-.5-5.8a3 3 0 0 0-2.1-2.1C18.5 3.6 12 3.6 12 3.6s-6.5 0-8.4.5A3 3 0 0 0 1.5 6.2C1 8.1 1 12 1 12s0 3.9.5 5.8a3 3 0 0 0 2.1 2.1c1.9.5 8.4.5 8.4.5s6.5 0 8.4-.5a3 3 0 0 0 2.1-2.1c.5-1.9.5-5.8.5-5.8zM9.8 15.6V8.4l6.3 3.6-6.3 3.6z"/></svg>
+          Subscribe on YouTube
+        </a>
+        <p class="grid-note" id="videoCount"></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== About ===================== -->
+  <section class="section section--panel" id="about">
+    <div class="wrap about-grid">
+      <div class="about-art reveal">
+        <img src="assets/img/badge-color.webp" alt="The Harbour Sons crest in full colour"
+             width="900" height="1202" loading="lazy">
+      </div>
+
+      <div class="about-body reveal" style="--d:.12s">
+        <p class="eyebrow">Who we are</p>
+        <h2 class="section-title" data-bind="about.heading">Two chords, a rising tide</h2>
+        <div id="aboutBody"></div>
+        <ul class="members" id="members"></ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== Shows ===================== -->
+  <section class="section" id="shows">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div>
+          <p class="eyebrow">On the road</p>
+          <h2 class="section-title">Shows</h2>
+          <p class="lede">Come and stand near the front. Dates are added as they are confirmed.</p>
+        </div>
+      </div>
+      <ul class="shows" id="showList"></ul>
+    </div>
+  </section>
+
+  <!-- ===================== Booking ===================== -->
+  <section class="section section--panel" id="booking">
+    <div class="wrap booking reveal">
+      <p class="eyebrow">Get in touch</p>
+      <h2 class="section-title">Book the band</h2>
+      <p class="lede" data-bind="contact.note" style="text-align:center"></p>
+      <a class="booking-mail" id="bookingMail" href="#"></a>
+      <div class="socials" id="socials"></div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ===================== Footer ===================== -->
+<footer class="footer">
+  <img src="assets/img/seal-white.webp" alt="Harbour Sons" width="130" height="130" loading="lazy">
+  <div class="footer-meta">
+    <span>&copy; <span id="year"></span> Harbour Sons</span>
+    <a href="https://www.youtube.com/@HarbourSons" target="_blank" rel="noopener">YouTube</a>
+    <a href="#top">Back to top</a>
+  </div>
+</footer>
+
+<!-- ===================== Video lightbox ===================== -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Video player" hidden>
+  <button class="lightbox-close" id="lightboxClose" aria-label="Close video">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+  </button>
+  <div>
+    <div class="lightbox-frame" id="lightboxFrame"></div>
+    <p class="lightbox-caption" id="lightboxCaption"></p>
+  </div>
+</div>
+
+<script src="assets/js/main.js" type="module"></script>
+</body>
+</html>

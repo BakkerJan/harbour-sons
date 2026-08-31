@@ -1,0 +1,13 @@
+# OS / editor cruft
+Thumbs.db
+.DS_Store
+*.swp
+.vscode/
+.idea/
+
+# Local preview config
+.claude/
+
+# Master artwork stays out of the repo - see README
+*.ai
+*.eps

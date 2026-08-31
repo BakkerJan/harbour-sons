@@ -1,0 +1,69 @@
+{
+  "band": {
+    "name": "Harbour Sons",
+    "tagline": "Salt-worn folk from the low country",
+    "blurb": "Sea shanties, string-band roots and windswept covers — played loud enough to carry across the water.",
+    "location": "The Netherlands",
+    "foundedYear": 2025
+  },
+
+  "hero": {
+    "_comment": "mode: 'video' (self-hosted mp4, best), 'youtube' (ambient embed), or 'image' (poster only)",
+    "mode": "youtube",
+    "youtubeId": "-Bgr3BF1iOE",
+    "videoMp4": "assets/video/hero.mp4",
+    "videoWebm": "",
+    "poster": "assets/img/hero-poster.jpg",
+    "startAt": 12,
+    "endAt": 0,
+    "disableOnMobile": true,
+    "overlayOpacity": 0.78
+  },
+
+  "youtube": {
+    "handle": "HarbourSons",
+    "channelUrl": "https://www.youtube.com/@HarbourSons",
+    "channelId": "UC_cLmb4q0sxUMYAsrLzaAEA"
+  },
+
+  "links": [
+    { "label": "YouTube",   "url": "https://www.youtube.com/@HarbourSons", "icon": "youtube" },
+    { "label": "Instagram", "url": "",                                     "icon": "instagram" },
+    { "label": "Spotify",   "url": "",                                     "icon": "spotify" },
+    { "label": "Facebook",  "url": "",                                     "icon": "facebook" }
+  ],
+
+  "about": {
+    "heading": "Two chords, a rising tide",
+    "body": [
+      "Harbour Sons play the songs that get sung when the boats are in — old water-worn ballads, folk standards and the odd country lament, arranged for close harmony and whatever instruments fit in the van.",
+      "We started out playing for friends on a quayside in the summer of 2025. It has not got much more complicated than that since."
+    ],
+    "members": [
+      { "name": "Member One",   "role": "Vocals, guitar" },
+      { "name": "Member Two",   "role": "Vocals, mandolin" },
+      { "name": "Member Three", "role": "Upright bass" }
+    ]
+  },
+
+  "shows": [
+    { "date": "2026-09-19", "venue": "Havenfestival",   "city": "Harlingen",  "url": "", "note": "Main stage" },
+    { "date": "2026-10-11", "venue": "De Kade",          "city": "Zaandam",    "url": "", "note": "" },
+    { "date": "2026-11-08", "venue": "Café De Sluis",    "city": "Amsterdam",  "url": "", "note": "Late set" }
+  ],
+
+  "contact": {
+    "bookingEmail": "booking@harboursons.example",
+    "generalEmail": "",
+    "note": "For bookings, festivals and private events — drop us a line and we’ll come to you."
+  },
+
+  "marquee": [
+    "Fisherman’s Blues",
+    "Live at the quayside",
+    "Harbour Sons",
+    "Blue Eyes Crying In The Rain",
+    "Est. 2025",
+    "Bookings open"
+  ]
+}

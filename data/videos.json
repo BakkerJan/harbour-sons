@@ -1,0 +1,31 @@
+{
+  "channelId": "UC_cLmb4q0sxUMYAsrLzaAEA",
+  "channelUrl": "https://www.youtube.com/channel/UC_cLmb4q0sxUMYAsrLzaAEA",
+  "handle": "HarbourSons",
+  "updated": "2026-08-31T14:17:44+00:00",
+  "count": 2,
+  "videos": [
+    {
+      "id": "WEAlwHrXP8o",
+      "title": "Blue Eyes Crying In The Rain (Cover)",
+      "fullTitle": "Harbour Sons | Blue Eyes Crying In The Rain (Cover)",
+      "description": "Harbour Sons | Blue Eyes Crying In The Rain (Cover)",
+      "published": "2025-09-08T13:59:52+00:00",
+      "url": "https://www.youtube.com/watch?v=WEAlwHrXP8o",
+      "thumb": "https://i.ytimg.com/vi/WEAlwHrXP8o/maxresdefault.jpg",
+      "thumbFallback": "https://i.ytimg.com/vi/WEAlwHrXP8o/hqdefault.jpg",
+      "views": 132
+    },
+    {
+      "id": "-Bgr3BF1iOE",
+      "title": "Fisherman's Blues (Cover)",
+      "fullTitle": "Harbour Sons | Fisherman's Blues (Cover)",
+      "description": "Harbour Sons | Fisherman's Blues (Cover)",
+      "published": "2025-09-08T13:35:42+00:00",
+      "url": "https://www.youtube.com/watch?v=-Bgr3BF1iOE",
+      "thumb": "https://i.ytimg.com/vi/-Bgr3BF1iOE/maxresdefault.jpg",
+      "thumbFallback": "https://i.ytimg.com/vi/-Bgr3BF1iOE/hqdefault.jpg",
+      "views": 162
+    }
+  ]
+}
