@@ -5,13 +5,26 @@
 
 ## What is here now
 
-The current file was encoded from the band's own clip (`Website (1).mp4`,
-1920x1080, 10.7s). The source was 24 MB at roughly 19 Mbps — fine for a video
-player, far too heavy for a page background, where the file competes with the
-fonts, the logo and the video thumbnails for the visitor's first few seconds.
+Encoded from the band's own clip (`Website (1).mp4`, 1920x1080, 30fps, 10.7s).
 
-It was re-encoded with the audio track stripped, since a muted background loop
-never needs it and it is dead weight in every download.
+| File | Codec | Size |
+| --- | --- | --- |
+| source | h264 @ 18.7 Mbps + AAC | 24.2 MB |
+| `hero.webm` | VP9, crf 34, no audio | **0.75 MB** |
+| `hero.mp4` | h264, crf 23, no audio | **2.52 MB** |
+
+The page lists WebM first, so Chrome and Firefox take the 0.75 MB file and
+Safari falls back to the MP4. That is a 97% reduction on the source for most
+visitors.
+
+The source was fine for a video player and far too heavy for a page background,
+where the file competes with the fonts, the logo and the video thumbnails for
+the visitor's first few seconds. The audio track was stripped — a muted loop
+never needs it, and it was 192 kbps of dead weight in every download.
+
+crf 23 is higher quality than a background strictly needs. That is deliberate:
+the footage is dim (mean luminance 39/255) and sits under a scrim, and shadow
+detail is exactly where h264 shows blocking. Cheap insurance at this file size.
 
 ## Re-encoding
 
@@ -26,9 +39,9 @@ ffmpeg -i source.mp4 -an -vf "scale=1920:-2,fps=25" \
 What each flag is doing:
 
 - `-an` — drop the audio track entirely
-- `-crf 30` — quality target. Lower is better and bigger; 28-32 is the useful
-  range for something sitting behind a dark scrim at 78% opacity, where fine
-  detail is invisible anyway
+- `-crf 23` — quality target. Lower is better and bigger. Check the resulting
+  size before settling: this clip is a mostly locked-off shot, so it compressed
+  far better than a moving one would, which is why 23 fits in 2.5 MB here
 - `-preset slow` — spend more CPU for a smaller file. One-off cost
 - `-pix_fmt yuv420p` — the only chroma format Safari will play
 - `-movflags +faststart` — moves the index to the front so playback can begin
@@ -44,7 +57,9 @@ ffmpeg -i assets/video/hero.mp4 -an \
 ```
 
 The page lists WebM first and MP4 second, so browsers take the smaller one and
-Safari falls back to MP4.
+Safari falls back to MP4. The video is only removed (leaving the poster) when
+`networkState` reaches `NETWORK_NO_SOURCE` — i.e. every source failed. A single
+source being rejected is normal and must not kill the fallback.
 
 ## Guidance for a replacement clip
 

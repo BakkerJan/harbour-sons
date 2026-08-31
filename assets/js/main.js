@@ -96,8 +96,16 @@ function initSelfHostedVideo(cfg, media, soundBtn) {
   add(cfg.videoWebm, 'video/webm');
   add(cfg.videoMp4, 'video/mp4');
 
-  // If the file is missing (nobody dropped hero.mp4 in yet) keep the poster.
-  video.addEventListener('error', () => video.remove(), true);
+  // If every source fails (no file yet, or a codec the browser cannot take)
+  // drop the element so the poster shows through.
+  //
+  // Capture is needed because a failing <source> fires at the source, not the
+  // video — but a single source failing is NOT fatal: that is exactly how a
+  // browser rejects the WebM before trying the MP4. Only NETWORK_NO_SOURCE
+  // means the candidate list is exhausted.
+  video.addEventListener('error', () => {
+    if (video.networkState === HTMLMediaElement.NETWORK_NO_SOURCE) video.remove();
+  }, true);
   video.addEventListener('playing', () => media.classList.add('is-playing'), { once: true });
 
   media.append(video);

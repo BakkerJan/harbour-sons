@@ -11,13 +11,13 @@
     "mode": "video",
     "youtubeId": "-Bgr3BF1iOE",
     "videoMp4": "assets/video/hero.mp4",
-    "videoWebm": "",
+    "videoWebm": "assets/video/hero.webm",
     "hasAudio": false,
     "poster": "assets/img/hero-poster.jpg",
     "startAt": 12,
     "endAt": 0,
     "disableOnMobile": true,
-    "overlayOpacity": 0.78
+    "overlayOpacity": 0.58
   },
   "youtube": {
     "handle": "HarbourSons",
