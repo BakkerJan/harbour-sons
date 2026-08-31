@@ -136,15 +136,30 @@ To regenerate them, point the script at the master Logo folder:
 python tools/build-assets.py "C:/path/to/Logo"
 ```
 
-It trims the transparent margins, resizes, writes WebP, produces the white
-line-art versions used on dark backgrounds by inverting the mono artwork, and
-builds the favicons and the Open Graph card.
+It trims the transparent margins, resizes, writes WebP, builds the favicons and
+the Open Graph card, and derives white line-art variants (`*-white.webp`) for
+use on dark grounds. Those are made by folding the ink density into the alpha
+channel rather than inverting RGB, which looks identical but roughly halves the
+file size.
 
 Requires Pillow (`pip install Pillow`).
 
 The palette in `assets/css/style.css` is sampled from the colour badge, so the
-site and the logo agree: ink `#0E1417`, sand `#F3DDB6`, brass `#D89C60`,
-sea `#789CA8`, cream `#FBF3E4`.
+site and the logo agree:
+
+| Token | Hex | Role |
+| --- | --- | --- |
+| `--paper` | `#FBF3E4` | page ground |
+| `--sand` | `#F3E0BC` | alternating panels |
+| `--ink` | `#12181C` | body text (16.2:1 on paper) |
+| `--ink-soft` | `#4A565E` | secondary text (6.8:1) |
+| `--brass` | `#D89C60` | fills, ticker |
+| `--brass-mid` | `#B47830` | borders |
+| `--brass-deep` | `#8A5A1F` | small caps (5.3:1) |
+| `--sea-deep` | `#3F5F6C` | meta text (6.2:1) |
+
+The hero and the footer are the two dark anchors; everything between them is
+cream. Every text colour above meets WCAG AA on the ground it sits on.
 
 ---
 

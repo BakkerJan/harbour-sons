@@ -6,7 +6,7 @@ emits only the trimmed, resized, web-ready files that are committed.
 """
 import os
 import sys
-from PIL import Image
+from PIL import Image, ImageChops
 
 SRC = sys.argv[1] if len(sys.argv) > 1 else \
     "C:/Users/JanBakker/Downloads/Logo-20260831T140852Z-1-001/Logo"
@@ -34,11 +34,21 @@ def fit(im, w):
     return im.resize((w, round(im.height * w / im.width)), Image.LANCZOS)
 
 
-def invert_ink(im):
-    """Black line art -> white line art, alpha preserved."""
+def white_ink(im):
+    """Black line art -> white line art on transparent.
+
+    Rather than inverting RGB and keeping the old alpha, fold the ink density
+    into the alpha channel and make RGB a flat white. The result looks
+    identical on a dark background but roughly halves the file size: WebP
+    compresses a constant colour plane to nothing and only has to carry the
+    detail once, in alpha.
+    """
     r, g, b, a = im.split()
-    inv = Image.merge("RGB", (r, g, b)).point(lambda v: 255 - v)
-    return Image.merge("RGBA", (*inv.split(), a))
+    lum = Image.merge("RGB", (r, g, b)).convert("L")   # 0 = ink, 255 = paper
+    density = ImageChops.invert(lum)                   # 255 = ink, 0 = paper
+    out = Image.new("RGBA", im.size, (255, 255, 255, 0))
+    out.putalpha(ImageChops.multiply(density, a))
+    return out
 
 
 def save(im, name, quality=82):
@@ -62,10 +72,10 @@ def main():
     save(fit(badge, 900), "badge-color.webp")
     save(fit(seal, 640), "seal-color.webp")
     save(fit(wide, 1400), "lockup-wide.webp")
-    save(fit(invert_ink(mono), 900), "badge-white.webp")
-    save(fit(invert_ink(trim(load("Sublogo 2026/Harbour sons-07.png"))), 320),
+    save(fit(white_ink(mono), 640), "badge-white.webp")
+    save(fit(white_ink(trim(load("Sublogo 2026/Harbour sons-07.png"))), 320),
          "seal-white.webp")
-    save(fit(invert_ink(trim(load("Sublogo 2026/Harbour sons-08.png"))), 1200),
+    save(fit(white_ink(trim(load("Sublogo 2026/Harbour sons-08.png"))), 1000),
          "lockup-white.webp")
 
     # Favicons / PWA icons - square canvas, roundel centred
@@ -75,8 +85,8 @@ def main():
         icon.alpha_composite(s, ((px - s.width) // 2, (px - s.height) // 2))
         save(icon, f"icon-{px}.png")
 
-    # Open Graph card: 1200x630 on brand ink, badge centred
-    og = Image.new("RGBA", (1200, 630), (14, 20, 23, 255))
+    # Open Graph card: 1200x630 on brand cream, badge centred
+    og = Image.new("RGBA", (1200, 630), (251, 243, 228, 255))
     b = badge.copy()
     b.thumbnail((520, 520), Image.LANCZOS)
     og.alpha_composite(b, ((1200 - b.width) // 2, (630 - b.height) // 2))

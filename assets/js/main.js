@@ -410,7 +410,11 @@ function revealAll() {
 }
 
 function observeReveals(root = document) {
-  const canAnimate = !prefersReducedMotion && 'IntersectionObserver' in window;
+  // A zero-sized viewport (a tab that has never been painted) makes every
+  // IntersectionObserver rect empty, so nothing would ever intersect and the
+  // page would stay blank. Don't hide anything in that case.
+  const measurable = window.innerWidth > 0 && window.innerHeight > 0;
+  const canAnimate = !prefersReducedMotion && 'IntersectionObserver' in window && measurable;
   if (!canAnimate) { revealAll(); return; }
 
   // Opt in to the hidden starting state only now that we know we can undo it.
