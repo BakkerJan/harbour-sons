@@ -104,24 +104,21 @@ function initSelfHostedVideo(cfg, media, soundBtn) {
   video.play().catch(() => { /* autoplay refused — poster stands in */ });
 
   // A self-hosted file can carry audio, so offer an unmute control.
-  video.addEventListener('loadedmetadata', () => {
-    if (!videoHasAudio(video)) return;
-    soundBtn.hidden = false;
-    soundBtn.classList.add('is-available');
-    soundBtn.addEventListener('click', () => {
-      video.muted = !video.muted;
-      if (!video.muted) video.volume = 0.6;
-      setSoundState(soundBtn, !video.muted);
-    });
-  });
-}
+  //
+  // Whether it *has* audio is declared in site.json rather than sniffed. The
+  // browser APIs for this (webkitAudioDecodedByteCount, mozHasAudio,
+  // audioTracks) are either non-standard, unimplemented, or — for a video that
+  // starts muted — report zero because nothing has been decoded yet. A flag is
+  // boring and always right.
+  if (!cfg.hasAudio) return;
 
-function videoHasAudio(v) {
-  // Browsers disagree here; treat "unknown" as "has audio" and let the user decide.
-  if (typeof v.webkitAudioDecodedByteCount === 'number') return v.webkitAudioDecodedByteCount > 0;
-  if (typeof v.mozHasAudio === 'boolean') return v.mozHasAudio;
-  if (v.audioTracks) return v.audioTracks.length > 0;
-  return true;
+  soundBtn.hidden = false;
+  soundBtn.classList.add('is-available');
+  soundBtn.addEventListener('click', () => {
+    video.muted = !video.muted;
+    if (!video.muted) video.volume = 0.55;
+    setSoundState(soundBtn, !video.muted);
+  });
 }
 
 function setSoundState(btn, on) {

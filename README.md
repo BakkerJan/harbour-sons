@@ -46,8 +46,8 @@ ticket button; you can leave them in place as an archive or delete them.
 
 | Mode | What it does | When to use it |
 | --- | --- | --- |
-| `"video"` | Plays `assets/video/hero.mp4`, muted and looping | **Best option.** Full control, no YouTube branding, no third-party requests |
-| `"youtube"` | Ambient muted loop of a channel video *(current setting)* | Good stopgap — no video file needed |
+| `"video"` | Plays `assets/video/hero.mp4`, muted and looping *(current setting)* | **Best option.** Full control, no YouTube branding, no third-party requests |
+| `"youtube"` | Ambient muted loop of a channel video | Stopgap if you have no video file |
 | `"image"` | Static poster only | Fastest, calmest |
 
 Whatever the mode, the background **degrades to the poster image**
@@ -62,20 +62,23 @@ So nothing ever breaks — worst case you get a still image.
 
 Other `hero` keys:
 
-- `youtubeId` — which video to use as the backdrop
-- `startAt` / `endAt` — trim to the best few seconds (seconds, `0` = ignore)
-- `overlayOpacity` — `0`–`1`. Raise it if text is hard to read over the footage
 - `videoMp4` / `videoWebm` — paths used by `"video"` mode
+- `hasAudio` — shows the corner unmute button. `false` here, because the audio
+  was stripped during encoding. The video always *starts* muted either way
+- `poster` — the still shown before playback and as the fallback
+- `overlayOpacity` — `0`–`1`. Raise it if text is hard to read over the footage
+- `youtubeId`, `startAt`, `endAt` — only used by `"youtube"` mode
+- `disableOnMobile` — when `true`, phones get the poster instead of the video
 
-### Switching to your own footage
+### Replacing the footage
 
-1. Put `hero.mp4` in `assets/video/` (see the encoding notes in
-   [`assets/video/README.md`](assets/video/README.md) — aim for under 5 MB)
-2. Set `"mode": "video"` in `data/site.json`
+Drop a new `hero.mp4` into `assets/video/` — the encoding recipe and the
+reasoning behind each flag are in
+[`assets/video/README.md`](assets/video/README.md). Aim for under 5 MB.
 
-This is worth doing. The YouTube mode briefly flashes YouTube's own player
-controls while it boots, and the crop that hides its title bar throws away some
-of the frame. A self-hosted file has neither problem.
+Self-hosting is worth it over `"youtube"` mode: the YouTube embed briefly
+flashes its own player controls while it boots, and the crop that hides its
+title bar throws away part of the frame.
 
 ---
 
