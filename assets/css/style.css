@@ -71,10 +71,33 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .section { padding-block: clamp(4.5rem, 10vw, 8rem); position: relative; }
 .section--panel { background: var(--sand); }
 
-.visually-hidden {
-  position: absolute; width: 1px; height: 1px; padding: 0;
-  overflow: hidden; clip-path: inset(50%); white-space: nowrap;
+/* Skip link. Parked just above the viewport rather than clipped to 1px, so it
+   can actually slide into view when a keyboard user tabs to it — the whole
+   point of it. Deliberately NOT built on .btn: sharing a class with equal
+   specificity that is defined later means .btn wins the cascade, which is how
+   this ended up in the flow and pushing the hero down the page. */
+.skip-link {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  z-index: 200;
+  transform: translate(-50%, -160%);
+  padding: 0.7rem 1.5rem;
+  background: var(--paper);
+  color: var(--ink);
+  border: 1px solid var(--brass-mid);
+  border-top: 0;
+  border-radius: 0 0 var(--radius) var(--radius);
+  font-family: var(--font-label);
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: transform 0.3s var(--ease);
 }
+.skip-link:focus { transform: translate(-50%, 0); }
 
 /* ---------- Typography ---------- */
 h1, h2, h3 { font-family: var(--font-display); font-weight: 600; line-height: 1.12; }
