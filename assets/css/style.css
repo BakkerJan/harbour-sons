@@ -647,8 +647,19 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 600; line-height: 1.
 .lightbox[hidden] { display: none; }
 .lightbox.is-open { opacity: 1; pointer-events: auto; }
 
-.lightbox-frame {
+/* The wrapper needs an explicit width. .lightbox uses place-items:center, which
+   sizes its grid items to max-content — and the wrapper's max-content came from
+   the iframe's default 300x150, so the frame's own min(1100px, 100%) resolved
+   against ~300px and the player rendered postage-stamp sized.
+   The max-width caps the frame by *height* too: at 16:9 a 1100px-wide player is
+   619px tall, which would overflow a short window. */
+.lightbox-inner {
   width: min(1100px, 100%);
+  max-width: calc((100svh - 9rem) * 16 / 9);
+}
+
+.lightbox-frame {
+  width: 100%;
   aspect-ratio: 16 / 9;
   background: #000;
   border: 1px solid var(--brass-deep);

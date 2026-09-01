@@ -55,7 +55,8 @@ Whatever the mode, the background **degrades to the poster image**
 
 - the visitor has "reduce motion" turned on
 - the browser reports data-saver mode
-- the screen is phone-sized and `hero.disableOnMobile` is `true`
+- the screen is phone-sized and `hero.disableOnMobile` is `true` (it is `false`
+  — phones get the video too, using the lighter `*-mobile` encodes)
 - the video file is missing or fails to load
 
 So nothing ever breaks — worst case you get a still image.
@@ -63,6 +64,7 @@ So nothing ever breaks — worst case you get a still image.
 Other `hero` keys:
 
 - `videoMp4` / `videoWebm` — paths used by `"video"` mode
+- `videoMp4Mobile` / `videoWebmMobile` — lighter encodes served to phones
 - `hasAudio` — shows the corner unmute button. `false` here, because the audio
   was stripped during encoding. The video always *starts* muted either way
 - `poster` — the still shown before playback and as the fallback

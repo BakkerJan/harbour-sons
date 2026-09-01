@@ -7,15 +7,33 @@
 
 Encoded from the band's own clip (`Website (1).mp4`, 1920x1080, 30fps, 10.7s).
 
-| File | Codec | Size |
-| --- | --- | --- |
-| source | h264 @ 18.7 Mbps + AAC | 24.2 MB |
-| `hero.webm` | VP9, crf 34, no audio | **0.75 MB** |
-| `hero.mp4` | h264, crf 23, no audio | **2.52 MB** |
+| File | Codec | Size | Served to |
+| --- | --- | --- | --- |
+| source | h264 @ 18.7 Mbps + AAC | 24.2 MB | — |
+| `hero.webm` | VP9 crf 34, 1920px | **0.75 MB** | desktop, Chrome/Firefox |
+| `hero.mp4` | h264 crf 23, 1920px | **2.52 MB** | desktop, Safari |
+| `hero-mobile.webm` | VP9 crf 37, 1280px | **0.37 MB** | phones, Chrome/Firefox |
+| `hero-mobile.mp4` | h264 crf 26, 1280px | **0.78 MB** | phones, Safari |
 
-The page lists WebM first, so Chrome and Firefox take the 0.75 MB file and
+The page lists WebM first, so Chrome and Firefox take the smaller file and
 Safari falls back to the MP4. That is a 97% reduction on the source for most
-visitors.
+desktop visitors, and 98% on a phone.
+
+Phones get their own encode because a full-bleed background crops hard in
+portrait — at 375x812 only the middle ~26% of a 16:9 frame is ever on screen,
+so the extra resolution is paid for and thrown away. `<source media="...">`
+would be the declarative way to choose, but browsers dropped support for it on
+`<video>`, so `main.js` picks the pair instead. Configure them via
+`hero.videoMp4Mobile` and `hero.videoWebmMobile`; if either is absent the
+full-size file is used.
+
+To regenerate the mobile pair:
+
+```bash
+ffmpeg -i assets/video/hero.mp4 -an -vf "scale=1280:-2,fps=25"   -c:v libx264 -crf 26 -preset slow -pix_fmt yuv420p   -profile:v high -level 3.1 -movflags +faststart assets/video/hero-mobile.mp4
+
+ffmpeg -i assets/video/hero.mp4 -an -vf "scale=1280:-2,fps=25"   -c:v libvpx-vp9 -crf 37 -b:v 0 -row-mt 1 -deadline good -cpu-used 2   assets/video/hero-mobile.webm
+```
 
 The source was fine for a video player and far too heavy for a page background,
 where the file competes with the fonts, the logo and the video thumbnails for

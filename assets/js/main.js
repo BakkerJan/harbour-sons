@@ -68,7 +68,7 @@ function initHero(cfg) {
   let mode = cfg.mode || 'image';
   if (skipMotion) mode = 'image';
 
-  if (mode === 'video') initSelfHostedVideo(cfg, media, soundBtn);
+  if (mode === 'video') initSelfHostedVideo(cfg, media, soundBtn, isPhone);
   else if (mode === 'youtube') initYouTubeBackdrop(cfg, media);
 
   // Pause background motion while the hero is off screen — saves battery.
@@ -83,7 +83,7 @@ function initHero(cfg) {
   }
 }
 
-function initSelfHostedVideo(cfg, media, soundBtn) {
+function initSelfHostedVideo(cfg, media, soundBtn, isPhone) {
   const video = document.createElement('video');
   video.muted = true;          // required for autoplay everywhere
   video.loop = true;
@@ -98,8 +98,13 @@ function initSelfHostedVideo(cfg, media, soundBtn) {
     s.src = src; s.type = type;
     video.append(s);
   };
-  add(cfg.videoWebm, 'video/webm');
-  add(cfg.videoMp4, 'video/mp4');
+  // Phones get a lighter encode where one is supplied. A <source media="...">
+  // attribute would be the declarative way to do this, but browsers dropped
+  // support for it on <video>, so the choice has to be made here. Falls back to
+  // the full-size file when no mobile variant is configured.
+  const pick = (mobile, full) => (isPhone && mobile) ? mobile : full;
+  add(pick(cfg.videoWebmMobile, cfg.videoWebm), 'video/webm');
+  add(pick(cfg.videoMp4Mobile, cfg.videoMp4), 'video/mp4');
 
   // If every source fails (no file yet, or a codec the browser cannot take)
   // drop the element so the poster shows through.

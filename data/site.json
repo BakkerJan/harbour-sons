@@ -12,11 +12,13 @@
     "youtubeId": "-Bgr3BF1iOE",
     "videoMp4": "assets/video/hero.mp4",
     "videoWebm": "assets/video/hero.webm",
+    "videoMp4Mobile": "assets/video/hero-mobile.mp4",
+    "videoWebmMobile": "assets/video/hero-mobile.webm",
     "hasAudio": false,
     "poster": "assets/img/hero-poster.jpg",
     "startAt": 12,
     "endAt": 0,
-    "disableOnMobile": true,
+    "disableOnMobile": false,
     "overlayOpacity": 0.58
   },
   "youtube": {
