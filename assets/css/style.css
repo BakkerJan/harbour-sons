@@ -68,6 +68,9 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 
 /* ---------- Layout helpers ---------- */
 .wrap { width: min(var(--wrap), 100%); margin-inline: auto; padding-inline: var(--gutter); }
+/* Video thumbnails are not prose — they should not be held to a reading
+   measure. Overriding the token rather than the width keeps .wrap's logic. */
+.wrap--wide { --wrap: 1440px; }
 .section { padding-block: clamp(4.5rem, 10vw, 8rem); position: relative; }
 .section--panel { background: var(--sand); }
 
@@ -298,10 +301,17 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 600; line-height: 1.
 .hero {
   position: relative;
   min-height: 100svh;
+  /* Two rows: the crest block centres in the flexible row, the scroll cue owns
+     the row beneath it. The cue used to be absolutely positioned, which let the
+     centred content grow straight through it — reserving space with padding
+     only moved the problem, since the hero then outgrew the viewport. */
   display: grid;
-  place-items: center;
+  grid-template-rows: 1fr auto;
+  align-items: center;
+  justify-items: center;
+  row-gap: 1.75rem;
   text-align: center;
-  padding: 6rem var(--gutter) 4.5rem;
+  padding: 5.5rem var(--gutter) 2.5rem;
   overflow: hidden;
   isolation: isolate;
   background: var(--hero-ink);
@@ -376,7 +386,7 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 600; line-height: 1.
    its width, so it never pushes the tagline and buttons below the fold. */
 .hero-title { margin: 0; }
 .hero-badge {
-  width: min(clamp(180px, 23vw, 320px), 35svh);
+  width: min(clamp(180px, 23vw, 320px), 28svh);
   margin-inline: auto;
   filter: drop-shadow(0 16px 44px rgb(0 0 0 / 0.7));
   animation: rise 1.1s var(--ease) both;
@@ -442,10 +452,7 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 600; line-height: 1.
 .hero-sound svg { width: 16px; height: 16px; fill: currentColor; }
 
 .scroll-cue {
-  position: absolute;
-  left: 50%;
-  bottom: 2rem;
-  transform: translateX(-50%);
+  justify-self: center;
   z-index: 3;
   display: grid;
   justify-items: center;
@@ -471,6 +478,22 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 600; line-height: 1.
 
 @media (max-width: 700px) {
   .hero-sound { bottom: auto; top: 5.2rem; right: 1rem; }
+  .scroll-cue { display: none; }
+}
+
+/* A short window (a laptop, a browser with lots of toolbars) has no room for
+   the cue below the buttons. Reclaim the reserved padding and drop the cue
+   rather than letting the two collide. */
+/* A short window has no room for the cue at all — drop it rather than squeeze
+   the crest. The grid row collapses to zero on its own. */
+/* Only the crest scales with viewport height; the tagline, blurb and buttons
+   are a fixed ~250px. Below roughly 880px there is no honest room for the cue
+   underneath them, so drop it rather than let it crowd the buttons. Measured:
+   at 900px tall the gap is a comfortable 40px, at 800px it collapses to 10px.
+   Collapse the row too — grid-template-rows declares two rows explicitly, so
+   the row-gap outlives display:none on its only item. */
+@media (max-height: 880px) {
+  .hero { grid-template-rows: 1fr; row-gap: 0; }
   .scroll-cue { display: none; }
 }
 
@@ -521,7 +544,7 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 600; line-height: 1.
 
 .video-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(340px, 100%), 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(400px, 100%), 1fr));
   gap: clamp(1.25rem, 3vw, 2.25rem);
 }
 
