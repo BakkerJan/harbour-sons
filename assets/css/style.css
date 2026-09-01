@@ -653,6 +653,11 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 600; line-height: 1.
    against ~300px and the player rendered postage-stamp sized.
    The max-width caps the frame by *height* too: at 16:9 a 1100px-wide player is
    619px tall, which would overflow a short window. */
+/* Matched structurally as well as by class: a visitor holding a cached
+   index.html (Pages serves max-age=600) would otherwise get the new CSS with
+   the old markup, and the player would stay postage-stamp sized until their
+   HTML expired. The child selector needs no cooperation from the HTML. */
+.lightbox > div,
 .lightbox-inner {
   width: min(1100px, 100%);
   max-width: calc((100svh - 9rem) * 16 / 9);
