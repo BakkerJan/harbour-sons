@@ -56,7 +56,12 @@ function initHero(cfg) {
   // The poster is both the placeholder and the permanent fallback.
   if (cfg.poster) media.style.backgroundImage = `url("${cfg.poster}")`;
 
-  const isPhone   = window.matchMedia('(max-width: 700px)').matches;
+  // Guard against a viewport that has not been measured yet: a tab that has
+  // never been painted reports 0, and "0 <= 700" would read as a phone and
+  // silently downgrade the hero to a still for everyone. A real phone always
+  // reports a real width, so treat 0 as "not a phone".
+  const vw = window.innerWidth;
+  const isPhone = vw > 0 && vw <= 700;
   const skipMotion = prefersReducedMotion || savesData ||
                      (cfg.disableOnMobile && isPhone);
 
