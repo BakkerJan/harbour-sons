@@ -122,8 +122,14 @@ else on the page.
 `.github/workflows/deploy.yml` publishes the repository root on every push.
 `.nojekyll` is present so Jekyll does not eat any files.
 
-If you use a custom domain, add a `CNAME` file containing the domain and update
-the absolute `og:image` URL in `index.html` so social previews work.
+The site is live at **https://harboursons.nl** (the `bakkerjan.github.io/harbour-sons`
+URL 301-redirects to it). The custom domain is stored in the repository's Pages
+settings rather than a `CNAME` file, which is normal for Actions-based
+deployment and survives redeploys.
+
+If you ever change the domain, update the absolute `og:url`, `og:image` and
+`canonical` URLs in `index.html` too — social platforms fetch those from their
+own servers, so a relative path has nothing to resolve against.
 
 ---
 
