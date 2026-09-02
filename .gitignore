@@ -8,6 +8,9 @@ Thumbs.db
 # Local preview config
 .claude/
 
+# Python bytecode
+__pycache__/
+
 # Master artwork stays out of the repo - see README
 *.ai
 *.eps
