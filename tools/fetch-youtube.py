@@ -10,6 +10,7 @@ import json
 import os
 import re
 import sys
+import urllib.error
 import urllib.request
 from datetime import datetime, timezone
 from xml.etree import ElementTree as ET
@@ -46,8 +47,12 @@ def main():
     url = FEED.format(channel_id)
     print(f"Fetching {url}")
     req = urllib.request.Request(url, headers={"User-Agent": "harboursons-site/1.0"})
-    with urllib.request.urlopen(req, timeout=30) as resp:
-        raw = resp.read()
+    try:
+        with urllib.request.urlopen(req, timeout=30) as resp:
+            raw = resp.read()
+    except urllib.error.URLError as exc:
+        print(f"Could not fetch the YouTube feed: {exc}. Keeping existing data.", file=sys.stderr)
+        return 0
 
     root = ET.fromstring(raw)
     videos = []
